@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.email == 'hyelnamunianthan@gmail.com' || 
+              exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // Admin has full access to everything
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Public tracking collection - allow anyone to read
+    match /public_tracking/{trackingId} {
+      allow read: if true;  // Allow public read access without authentication
+      allow write: if isAuthenticated();  // Only authenticated users can write
+    }
+    
+    // Allow users to read and write their own data
+    match /users/{userId} {
+      allow read, write: if isUser(userId);
+    }
+    
+    // Orders - users can read their own orders, admins can read and write all orders
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == request.auth.uid || isAdmin()
+      );
+      allow write: if isAdmin();
+      allow create: if isAuthenticated();
+    }
+    
+    // Transactions - similar rules to orders
+    match /transactions/{transactionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == request.auth.uid || isAdmin()
+      );
+      allow write: if isAdmin();
+      allow create: if isAuthenticated();
+    }
+    
+    // Visitors - only admins can read, anyone can create
+    match /visitors/{visitorId} {
+      allow read: if isAdmin();
+      allow create: if true;
+    }
+  }
+}

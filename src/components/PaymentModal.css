@@ -1,0 +1,376 @@
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.payment-modal {
+  background-color: #121212;
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.theme-dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+}
+
+.payment-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-modal-amount {
+  padding: 16px 20px;
+  background-color: #1e1e1e;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.payment-modal-amount h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.payment-content {
+  padding: 20px;
+}
+
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.payment-method-button {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ffffff;
+}
+
+.payment-method-button:hover {
+  background-color: #2e2e2e;
+  border-color: #4caf50;
+}
+
+.payment-method-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.payment-method-icon {
+  margin-bottom: 8px;
+  color: #4caf50;
+}
+
+.payment-method-name {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.payment-details-container {
+  padding: 10px 0;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #4caf50;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.merchant-notice {
+  background-color: #1e1e1e;
+  border-left: 4px solid #4caf50;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.bank-details {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.bank-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+}
+
+.bank-detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #aaa;
+}
+
+.detail-value {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.payment-instructions {
+  margin-bottom: 20px;
+}
+
+.payment-proof-upload {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.upload-instructions {
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.proof-preview {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.proof-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+.upload-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-button {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.upload-button:hover {
+  background-color: #2e2e2e;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.payment-submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.payment-submit-button:hover {
+  background-color: #3e8e41;
+}
+
+.payment-submit-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.crypto-instructions {
+  margin-bottom: 20px;
+}
+
+.crypto-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.crypto-option {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.crypto-option h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #4caf50;
+}
+
+.crypto-qr {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.crypto-qr img {
+  max-width: 200px;
+  border-radius: 4px;
+  background-color: white;
+  padding: 8px;
+}
+
+.crypto-address-container {
+  display: flex;
+  align-items: center;
+  background-color: #121212;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.crypto-address {
+  font-family: monospace;
+  font-size: 0.9rem;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: #4caf50;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.payment-warning {
+  background-color: #332700;
+  border-left: 4px solid #ffc107;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.payment-error {
+  background-color: #331800;
+  border-left: 4px solid #ff5722;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+  color: #ff5722;
+}
+
+.payment-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #333;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+@media (max-width: 600px) {
+  .payment-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .payment-modal {
+    max-height: 100vh;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  .payment-modal-overlay {
+    padding: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .payment-methods-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .file-name {
+    max-width: 100%;
+  }
+}

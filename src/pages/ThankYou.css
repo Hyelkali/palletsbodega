@@ -1,0 +1,276 @@
+.thank-you-page {
+  padding: 40px 0;
+  background-color: #121212;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+.thank-you-content {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.thank-you-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(to right, #000000, #0a2e0a);
+  border-radius: 8px;
+}
+
+.success-icon {
+  color: #00ff00;
+  margin-bottom: 20px;
+}
+
+.pending-icon {
+  color: #ffa500;
+  margin-bottom: 20px;
+}
+
+.thank-you-title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #00ff00;
+}
+
+.thank-you-message {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.order-confirmation {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.email-notification {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin-top: 10px;
+}
+
+.order-details {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #00ff00;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+  padding-bottom: 10px;
+}
+
+.order-info {
+  margin-bottom: 20px;
+}
+
+.order-info p {
+  margin-bottom: 8px;
+}
+
+.subsection-title {
+  font-size: 1.2rem;
+  margin: 20px 0 15px;
+  color: #00ff00;
+}
+
+.order-items {
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-weight: 600;
+}
+
+.item-quantity {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin-top: 5px;
+}
+
+.item-price {
+  font-weight: 600;
+  color: #00ff00;
+}
+
+.shipping-address {
+  margin-bottom: 20px;
+}
+
+.shipping-address p {
+  margin-bottom: 5px;
+}
+
+.tracking-code-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: rgba(0, 255, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.tracking-code {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: #00ff00;
+  font-weight: 600;
+}
+
+.payment-proof-section {
+  margin: 20px 0;
+}
+
+.payment-proof-image {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.payment-proof-image img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.thank-you-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.back-to-home,
+.print-button,
+.track-button,
+.payment-button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.back-to-home {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.back-to-home:hover {
+  background-color: #2a2a2a;
+  border-color: #00ff00;
+}
+
+.print-button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background-color: #2a2a2a;
+  border-color: #00ff00;
+}
+
+.track-button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.track-button:hover {
+  background-color: #2a2a2a;
+  border-color: #00ff00;
+}
+
+.payment-button {
+  background: linear-gradient(to right, #0a2e0a, #000000);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.payment-button:hover {
+  background: linear-gradient(to right, #0a2e0a, #0a2e0a);
+}
+
+.payment-reminder {
+  margin-top: 20px;
+  text-align: center;
+  padding: 15px;
+  background-color: rgba(255, 165, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.payment-reminder p {
+  margin-bottom: 10px;
+  color: #ffa500;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #a0a0a0;
+}
+
+.error-message {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff5722;
+  margin-bottom: 20px;
+}
+
+.order-tracking-section {
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .thank-you-content {
+    padding: 20px 15px;
+  }
+
+  .thank-you-title {
+    font-size: 1.5rem;
+  }
+
+  .thank-you-actions {
+    flex-direction: column;
+  }
+
+  .back-to-home,
+  .print-button,
+  .track-button,
+  .payment-button {
+    width: 100%;
+  }
+}
