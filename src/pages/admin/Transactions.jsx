@@ -1,11 +1,24 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { collection, query, orderBy, getDocs, doc, getDoc, where, limit, startAfter } from "firebase/firestore"
+import {
+  collection,
+  query,
+  orderBy,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  where,
+  limit,
+  startAfter,
+  serverTimestamp,
+} from "firebase/firestore"
 import { db } from "../../firebase/config"
 import { isValidBlobUrl } from "../../services/blobService"
 import "./Transactions.css"
 import { useAuth } from "../../context/AuthContext"
+import { useToast } from "../../context/ToastContext"
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([])
@@ -17,6 +30,8 @@ const Transactions = () => {
   const [fullScreenImageUrl, setFullScreenImageUrl] = useState("")
   const [debugInfo, setDebugInfo] = useState(null)
   const { user } = useAuth()
+  const { success, error: showError } = useToast()
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
 
   // Pagination
   const [lastVisible, setLastVisible] = useState(null)
@@ -242,6 +257,63 @@ const Transactions = () => {
     }
   }
 
+  const handleUpdateStatus = async (newStatus) => {
+    if (!selectedTransaction) return
+
+    try {
+      setIsUpdatingStatus(true)
+
+      // Update transaction status
+      await updateDoc(doc(db, "transactions", selectedTransaction.id), {
+        status: newStatus,
+        paymentStatus: newStatus === "success" ? "paid" : newStatus === "failed" ? "rejected" : "pending",
+        updatedAt: serverTimestamp(),
+      })
+
+      // Update the corresponding order
+      if (selectedTransaction.orderId) {
+        const orderStatus = newStatus === "success" ? "approved" : newStatus === "failed" ? "cancelled" : "pending"
+
+        const paymentStatus = newStatus === "success" ? "paid" : newStatus === "failed" ? "rejected" : "pending"
+
+        await updateDoc(doc(db, "orders", selectedTransaction.orderId), {
+          status: orderStatus,
+          paymentStatus: paymentStatus,
+          updatedAt: serverTimestamp(),
+        })
+
+        success({
+          title: "Status Updated",
+          message: `Transaction and order status updated to ${newStatus}`,
+        })
+      } else {
+        success({
+          title: "Status Updated",
+          message: `Transaction status updated to ${newStatus}`,
+        })
+      }
+
+      // Update the local state
+      setSelectedTransaction({
+        ...selectedTransaction,
+        status: newStatus,
+        paymentStatus: newStatus === "success" ? "paid" : newStatus === "failed" ? "rejected" : "pending",
+        updatedAt: new Date(),
+      })
+
+      // Refresh the transactions list
+      fetchTransactions()
+    } catch (err) {
+      console.error("Error updating status:", err)
+      showError({
+        title: "Update Failed",
+        message: err.message || "Failed to update status",
+      })
+    } finally {
+      setIsUpdatingStatus(false)
+    }
+  }
+
   return (
     <div className="transactions-page">
       <h1 className="page-title">Transaction History</h1>
@@ -399,6 +471,10 @@ const Transactions = () => {
                     <span>{selectedTransaction.transactionId || selectedTransaction.id}</span>
                   </p>
                   <p>
+                    <span>Order ID:</span>
+                    <span>{selectedTransaction.orderId || "N/A"}</span>
+                  </p>
+                  <p>
                     <span>Date:</span>
                     <span>{formatDate(selectedTransaction.createdAt)}</span>
                   </p>
@@ -416,7 +492,7 @@ const Transactions = () => {
                   </p>
                   <p>
                     <span>Tracking Code:</span>
-                    <span>{selectedTransaction.trackingNumber || "N/A"}</span>
+                    <span>{selectedTransaction.trackingNumber || selectedTransaction.trackingCode || "N/A"}</span>
                   </p>
                 </div>
 
@@ -471,6 +547,34 @@ const Transactions = () => {
                       <span>{selectedTransaction.customerName}</span>
                     </p>
                   )}
+                </div>
+
+                <div className="status-update-section">
+                  <h3>Update Status</h3>
+                  <div className="status-buttons">
+                    <button
+                      className={`status-button ${selectedTransaction.status === "success" ? "active" : ""}`}
+                      onClick={() => handleUpdateStatus("success")}
+                      disabled={isUpdatingStatus || selectedTransaction.status === "success"}
+                    >
+                      Approve Payment
+                    </button>
+                    <button
+                      className={`status-button ${selectedTransaction.status === "pending" ? "active" : ""}`}
+                      onClick={() => handleUpdateStatus("pending")}
+                      disabled={isUpdatingStatus || selectedTransaction.status === "pending"}
+                    >
+                      Mark as Pending
+                    </button>
+                    <button
+                      className={`status-button ${selectedTransaction.status === "failed" ? "active" : ""}`}
+                      onClick={() => handleUpdateStatus("failed")}
+                      disabled={isUpdatingStatus || selectedTransaction.status === "failed"}
+                    >
+                      Reject Payment
+                    </button>
+                  </div>
+                  {isUpdatingStatus && <div className="status-updating">Updating status...</div>}
                 </div>
               </div>
 
