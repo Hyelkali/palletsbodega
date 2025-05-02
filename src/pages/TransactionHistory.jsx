@@ -357,6 +357,7 @@ const TransactionHistory = () => {
                     <th>Payment Method</th>
                     <th>Payment Status</th>
                     <th>Order Status</th>
+                    <th>Tracking</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -397,6 +398,22 @@ const TransactionHistory = () => {
                               transaction.orderStatus.slice(1).replace(/_/g, " ")
                             : "Pending"}
                         </span>
+                      </td>
+                      <td>
+                        {transaction.trackingNumber || transaction.trackingCode ? (
+                          <button
+                            className="tracking-link-btn"
+                            onClick={() =>
+                              navigate(
+                                `/track-shipment?tracking=${transaction.trackingNumber || transaction.trackingCode}`,
+                              )
+                            }
+                          >
+                            {transaction.trackingNumber || transaction.trackingCode}
+                          </button>
+                        ) : (
+                          <span className="no-tracking">Not available yet</span>
+                        )}
                       </td>
                       <td>
                         <button className="view-details-btn" onClick={() => openActionModal(transaction)}>
@@ -473,6 +490,25 @@ const TransactionHistory = () => {
                       : "Pending"}
                   </span>
                 </div>
+                <div className="detail-row">
+                  <span className="detail-label">Tracking Code:</span>
+                  <span className="detail-value">
+                    {selectedTransaction.trackingNumber || selectedTransaction.trackingCode ? (
+                      <button
+                        className="tracking-link-btn"
+                        onClick={() =>
+                          navigate(
+                            `/track-shipment?tracking=${selectedTransaction.trackingNumber || selectedTransaction.trackingCode}`,
+                          )
+                        }
+                      >
+                        {selectedTransaction.trackingNumber || selectedTransaction.trackingCode}
+                      </button>
+                    ) : (
+                      "Not available yet"
+                    )}
+                  </span>
+                </div>
               </div>
 
               {/* Display payment details if available */}
@@ -534,9 +570,11 @@ const TransactionHistory = () => {
                   </button>
                 )}
 
-                <button className="contact-support-btn" onClick={() => handleContactSupport(selectedTransaction)}>
-                  Contact Support
-                </button>
+                {selectedTransaction.paymentStatus === "details_provided" && (
+                  <button className="upload-proof-btn" onClick={() => handleCompletePayment(selectedTransaction)}>
+                    Upload Payment Proof
+                  </button>
+                )}
 
                 {(selectedTransaction.paymentStatus === "pending" || selectedTransaction.status === "pending") && (
                   <button

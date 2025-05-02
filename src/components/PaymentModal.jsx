@@ -93,11 +93,11 @@ const PaymentModal = ({ isOpen, onClose, orderId, amount, customerEmail }) => {
 
       success({
         title: "Request Sent",
-        message: "Payment details request sent to admin. You will be notified when details are available.",
+        message: "Payment details request sent to admin. You can now upload your payment proof.",
       })
 
-      // Navigate to thank you page
-      navigate(`/thank-you?orderId=${orderId}`)
+      setProcessing(false)
+      // Note: We're not navigating away, allowing the user to upload proof
     } catch (err) {
       console.error("Error requesting payment details:", err)
       setError(err.message || "Failed to request payment details")
@@ -105,7 +105,6 @@ const PaymentModal = ({ isOpen, onClose, orderId, amount, customerEmail }) => {
         title: "Request Failed",
         message: err.message || "There was an error requesting payment details",
       })
-    } finally {
       setProcessing(false)
     }
   }
@@ -576,16 +575,60 @@ const PaymentModal = ({ isOpen, onClose, orderId, amount, customerEmail }) => {
                     ← Back to payment methods
                   </button>
 
-                  <h3>Request Payment Details</h3>
+                  <h3>{selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1).replace(/_/g, " ")} Payment</h3>
+
                   <div className="payment-instructions">
                     <p>To proceed with this payment method, you need to request payment details from the admin.</p>
                     <p>
                       Click the button below to send a request. You will be notified when the details are available.
                     </p>
+                    <button
+                      className="payment-submit-button"
+                      onClick={handleRequestPaymentDetails}
+                      disabled={processing}
+                    >
+                      {processing ? "Processing..." : "Request Payment Details"}
+                    </button>
                   </div>
 
-                  <button className="payment-submit-button" onClick={handleRequestPaymentDetails} disabled={processing}>
-                    {processing ? "Processing..." : "Request Payment Details"}
+                  {/* Payment proof upload section - show for all payment methods */}
+                  <div className="payment-proof-upload">
+                    <h4>Upload Payment Proof</h4>
+                    <p className="upload-instructions">Please upload a screenshot showing your payment confirmation</p>
+
+                    {previewUrl && (
+                      <div className="proof-preview">
+                        <img src={previewUrl || "/placeholder.svg"} alt="Payment proof preview" />
+                      </div>
+                    )}
+
+                    <div className="upload-controls">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        accept="image/*"
+                        className="file-input"
+                        id="payment-proof"
+                      />
+                      <button
+                        className="upload-button"
+                        onClick={() => fileInputRef.current.click()}
+                        disabled={processing || uploadingProof}
+                      >
+                        <Upload size={16} />
+                        Select Screenshot
+                      </button>
+                      {paymentProof && <span className="file-name">{paymentProof.name}</span>}
+                    </div>
+                  </div>
+
+                  <button
+                    className="payment-submit-button"
+                    onClick={handlePaymentConfirmation}
+                    disabled={processing || uploadingProof || !paymentProof}
+                  >
+                    {processing || uploadingProof ? "Processing..." : "Submit Payment Proof"}
                   </button>
                 </div>
               )}

@@ -314,25 +314,58 @@ const Orders = () => {
     try {
       setLoading(true)
 
-      // Use Firebase function URL
-      const functionUrl = "https://us-central1-YOUR_FIREBASE_PROJECT_ID.cloudfunctions.net/addTrackingCode"
-
-      const response = await fetch(functionUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      // Update the order with tracking information
+      await updateDoc(doc(db, "orders", selectedOrder.id), {
+        trackingId: newTrackingCode,
+        trackingCode: newTrackingCode,
+        tracking: {
+          trackingNumber: newTrackingCode,
+          carrier: newCarrier || "Pallets Bodega Shipping",
+          status: "shipped",
+          statusHistory: [
+            {
+              status: "shipped",
+              timestamp: new Date().toISOString(),
+              location: "Shipping Center",
+              message: "Your order has been shipped",
+            },
+          ],
+          estimatedDelivery: newEstimatedDelivery || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
         },
-        body: JSON.stringify({
-          orderId: selectedOrder.id,
-          trackingCode: newTrackingCode,
-          carrier: newCarrier,
-          estimatedDelivery: newEstimatedDelivery,
-        }),
+        updatedAt: serverTimestamp(),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to add tracking code")
+      // Also update the transaction record with tracking information
+      const transactionsQuery = query(collection(db, "transactions"), where("orderId", "==", selectedOrder.id))
+      const transactionSnapshot = await getDocs(transactionsQuery)
+
+      if (!transactionSnapshot.empty) {
+        const transactionDoc = transactionSnapshot.docs[0]
+        await updateDoc(doc(db, "transactions", transactionDoc.id), {
+          trackingCode: newTrackingCode,
+          trackingNumber: newTrackingCode,
+          updatedAt: serverTimestamp(),
+        })
       }
+
+      // Create a public tracking record
+      await addDoc(collection(db, "public_tracking"), {
+        trackingNumber: newTrackingCode,
+        orderId: selectedOrder.id,
+        carrier: newCarrier || "Pallets Bodega Shipping",
+        status: "shipped",
+        statusHistory: [
+          {
+            status: "shipped",
+            timestamp: new Date().toISOString(),
+            location: "Shipping Center",
+            message: "Your order has been shipped",
+          },
+        ],
+        estimatedDelivery: newEstimatedDelivery || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      })
 
       success({
         title: "Tracking Added",

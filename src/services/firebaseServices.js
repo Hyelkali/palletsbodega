@@ -1,4 +1,15 @@
-import { collection, doc, getDoc, getDocs, addDoc, updateDoc, query, where, orderBy } from "firebase/firestore"
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+} from "firebase/firestore"
 import { db } from "../firebase/config"
 import { createOrderTracking } from "./trackingService"
 
@@ -141,6 +152,7 @@ export const createOrder = async (orderData) => {
           paymentMethod: orderData.paymentMethod || "pending",
           paymentStatus: orderData.paymentStatus || "pending_payment",
           trackingNumber: trackingNumber,
+          trackingCode: trackingNumber,
           createdAt: new Date().toISOString(),
         })
         console.log("Transaction record created successfully")
@@ -194,12 +206,35 @@ export const updateOrderStatus = async (orderId, status, userId) => {
       const transactionsSnapshot = await getDocs(transactionsQuery)
 
       if (!transactionsSnapshot.empty) {
+        // Get the current order to access its tracking information
+        const ordersSnapshot = await getDocs(collection(db, "orders"))
+        const orders = []
+        ordersSnapshot.forEach((doc) => {
+          orders.push({ id: doc.id, ...doc.data() })
+        })
+        const currentOrder = orders.find((order) => order.id === orderId)
+
         const transactionDoc = transactionsSnapshot.docs[0]
         await updateDoc(doc(db, "transactions", transactionDoc.id), {
-          status: status === "approved" ? "success" : "failed",
-          paymentStatus: status === "approved" ? "paid" : "rejected",
+          orderStatus: status, // Add order status to transaction
+          status:
+            status === "approved"
+              ? "success"
+              : status === "rejected"
+                ? "failed"
+                : status === "delivered"
+                  ? "completed"
+                  : "pending",
           updatedAt: new Date().toISOString(),
+          // Add tracking information if available
+          ...(currentOrder?.trackingId && { trackingCode: currentOrder.trackingId }),
+          ...(currentOrder?.trackingCode && { trackingCode: currentOrder.trackingCode }),
+          ...(currentOrder?.tracking?.trackingNumber && { trackingNumber: currentOrder.tracking.trackingNumber }),
         })
+
+        console.log(`Transaction ${transactionDoc.id} updated with order status: ${status}`)
+      } else {
+        console.warn(`No transaction found for order ${orderId}`)
       }
     }
 
@@ -453,5 +488,61 @@ export const updateTransactionStatus = async (transactionId, status) => {
   } catch (error) {
     console.error("Error updating transaction status:", error)
     throw error
+  }
+}
+
+// Add a createTransactionRecord function to ensure tracking codes are included in transaction records
+// Add this function after the updateTransactionStatus function:
+// Create a transaction record if status is approved
+export const createTransactionRecord = async (orderId) => {
+  try {
+    // Get the order details
+    const ordersSnapshot = await getDocs(collection(db, "orders"))
+    const orders = []
+    ordersSnapshot.forEach((doc) => {
+      orders.push({ id: doc.id, ...doc.data() })
+    })
+    const order = orders.find((o) => o.id === orderId)
+    if (!order) return
+
+    // Check if transaction already exists
+    const transactionsQuery = query(collection(db, "transactions"), orderBy("createdAt", "desc"))
+
+    const querySnapshot = await getDocs(transactionsQuery)
+    const existingTransaction = querySnapshot.docs.find((doc) => doc.data().orderId === orderId)
+
+    if (existingTransaction) {
+      // Update existing transaction
+      await updateDoc(doc(db, "transactions", existingTransaction.id), {
+        status: "approved",
+        updatedAt: serverTimestamp(),
+        // Add tracking information if available
+        ...(order.trackingId && { trackingCode: order.trackingId }),
+        ...(order.trackingCode && { trackingCode: order.trackingCode }),
+        ...(order.tracking?.trackingNumber && { trackingNumber: order.tracking.trackingNumber }),
+      })
+    } else {
+      // Create new transaction
+      await addDoc(collection(db, "transactions"), {
+        orderId: orderId,
+        customerId: order.customerId,
+        customerEmail: order.customerEmail,
+        amount: Number(order.totalAmount) || 0,
+        status: "approved",
+        paymentMethod: order.paymentMethod || "Credit Card",
+        paymentProofUrl: order.paymentProofUrl || null,
+        // Add tracking information if available
+        trackingCode: order.trackingId || order.trackingCode || order.tracking?.trackingNumber || null,
+        trackingNumber: order.tracking?.trackingNumber || order.trackingId || order.trackingCode || null,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      })
+    }
+
+    console.log("Transaction record created successfully")
+    return true
+  } catch (err) {
+    console.error("Error creating transaction:", err)
+    throw err
   }
 }
