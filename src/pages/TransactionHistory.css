@@ -265,6 +265,9 @@
 .recently-updated {
   background-color: rgba(0, 255, 0, 0.05);
 }
+.recently-updated:hover{
+  background: linear-gradient(to right, #171515, #023a26);
+}
 
 .view-details-btn,
 .action-btn {

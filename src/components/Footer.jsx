@@ -73,7 +73,7 @@ const Footer = () => {
                 className="subscribe-input"
                 disabled={isSubscribing}
               />
-              <button type="submit" className="subscribe-button" disabled={isSubscribing}>
+              <button type="submit" className="subscribe-button"  disabled={isSubscribing}>
                 {isSubscribing ? (
                   <span className="loading-spinner"></span>
                 ) : (
@@ -103,7 +103,7 @@ const Footer = () => {
       <div className="footer-main">
         <div className="container">
           <div className="footer-shop">
-            <button className="follow-button" onClick={handleFollowClick}>
+            <button className="follow-button"  onClick={handleFollowClick}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
