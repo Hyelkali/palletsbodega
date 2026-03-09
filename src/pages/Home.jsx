@@ -45,7 +45,7 @@ const Home = () => {
 
   // NEW PROJECTOR PRODUCT
   const projectorProduct = {
-    id: 13,
+    id: 18,
     name: "Magcubic Smart Portable Projector",
     price: 199.99,
     originalPrice: 399.99,
@@ -166,7 +166,7 @@ const Home = () => {
             <div className="hero-actions">
               <button
                 className="hero-button primary"
-                onClick={() => navigate("/product/13")}
+                onClick={() => navigate("/product/18")}
               >
                 View Details
               </button>

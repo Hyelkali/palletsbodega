@@ -260,6 +260,44 @@ images: [
     featured: true,
   },
   {
+    id: 18,
+    name: "Magcubic Smart Portable Projector",
+    price: 199.99,
+    originalPrice: 399.99,
+    description: `
+<h2>Magcubic Smart Portable Projector</h2>
+
+<p>Enjoy cinema-style projection anywhere with this compact, smart, battery-powered projector. Ideal for movies, gaming, and presentations with up to 1080p resolution and Bluetooth audio support.</p>
+
+<h3>Key Features</h3>
+<ul>
+  <li><strong>Display:</strong> Up to 1080p Full HD</li>
+  <li><strong>Brightness:</strong> 250 ANSI Lumens</li>
+  <li><strong>Battery:</strong> Up to 2.5 hours on battery</li>
+  <li><strong>Connectivity:</strong> HDMI, USB, Wi-Fi, Bluetooth</li>
+  <li><strong>Smart OS:</strong> Built-in Android for streaming apps</li>
+  <li><strong>Speakers:</strong> Built-in stereo speakers</li>
+</ul>
+
+<h3>In the box</h3>
+<ul>
+  <li>Magcubic Smart Portable Projector</li>
+  <li>Power Adapter</li>
+  <li>HDMI Cable</li>
+  <li>Remote Control</li>
+  <li>User Manual</li>
+</ul>
+`,
+    images: [
+      "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.09_PM_kfi7cg.jpg",
+      "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.08_PM_1_q88slk.jpg",
+    ],
+    soldOut: false,
+    sale: true,
+    category: "electronics",
+    featured: true,
+  },
+  {
     id: 1,
     name: "Auto Clicker for Phone",
     price: 82.99,
