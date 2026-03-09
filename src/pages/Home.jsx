@@ -114,42 +114,6 @@ const Home = () => {
     <div className="home-page">
       <div className="container">
 
-        {/* MERCEDES BIKE HERO */}
-        <div className="hero-product">
-          <div className="hero-content">
-            <div className="hero-badge">NEW ARRIVAL</div>
-            <h1 className="hero-title">{mercedesBike.name}</h1>
-            <p className="hero-description">{mercedesBike.description}</p>
-
-            <div className="hero-price">$4,000.00 USD</div>
-
-            <div className="hero-actions">
-              <button
-                className="hero-button primary"
-                onClick={() => navigate("/product/12")}
-              >
-                View Details
-              </button>
-
-              <button
-                className="hero-button secondary"
-                onClick={() => handleBuyNow(mercedesBike)}
-              >
-                Buy Now
-              </button>
-            </div>
-          </div>
-
-          <div className="hero-media">
-            <img
-              src={BikeImg}
-              alt="Mercedes AMG Bike"
-              className="hero-image"
-            />
-          </div>
-        </div>
-
-
         {/* PROJECTOR HERO */}
         <div className="hero-product">
           <div className="hero-content">
@@ -188,6 +152,41 @@ const Home = () => {
             />
           </div>
         </div>
+     {/* MERCEDES BIKE HERO */}
+        <div className="hero-product">
+          <div className="hero-content">
+            <div className="hero-badge">NEW ARRIVAL</div>
+            <h1 className="hero-title">{mercedesBike.name}</h1>
+            <p className="hero-description">{mercedesBike.description}</p>
+
+            <div className="hero-price">$4,000.00 USD</div>
+
+            <div className="hero-actions">
+              <button
+                className="hero-button primary"
+                onClick={() => navigate("/product/12")}
+              >
+                View Details
+              </button>
+
+              <button
+                className="hero-button secondary"
+                onClick={() => handleBuyNow(mercedesBike)}
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+
+          <div className="hero-media">
+            <img
+              src={BikeImg}
+              alt="Mercedes AMG Bike"
+              className="hero-image"
+            />
+          </div>
+        </div>
+
 
 
         {/* FEATURED PRODUCTS GRID */}
