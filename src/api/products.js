@@ -291,6 +291,9 @@ images: [
     images: [
       "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.09_PM_kfi7cg.jpg",
       "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.08_PM_1_q88slk.jpg",
+      "https://res.cloudinary.com/devnath/image/upload/v1773072765/WhatsApp_Image_2026-03-09_at_4.43.18_PM_txuntv.jpg",
+      "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.11_PM_iudljm.jpg",
+      "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.13_PM_y5htrs.jpg",
     ],
     soldOut: false,
     sale: true,
