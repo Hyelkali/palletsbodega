@@ -13,7 +13,7 @@ const BikeImg =
 
 // NEW PROJECTOR IMAGES
 const ProjectorImg1 =
-  "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.09_PM_kfi7cg.jpg"
+  "https://res.cloudinary.com/devnath/image/upload/v1773072764/WhatsApp_Image_2026-03-09_at_4.43.18_PM_1_bvsqc1.jpg"
 
 const ProjectorImg2 =
   "https://res.cloudinary.com/devnath/image/upload/v1773072766/WhatsApp_Image_2026-03-09_at_4.43.08_PM_1_q88slk.jpg"
