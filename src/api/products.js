@@ -332,7 +332,10 @@ images: [
   <tr><td>Gender</td><td>Unisex</td></tr>
 </table>
 `,
-    images: ["/new.jpeg"],
+    images: [
+      "https://res.cloudinary.com/devnath/image/upload/v1774947053/new_ttorra.jpg",
+      "https://res.cloudinary.com/devnath/image/upload/v1774947053/new_ttorra.jpg",
+    ],
     soldOut: false,
     sale: false,
     category: "adult",
