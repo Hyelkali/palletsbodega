@@ -332,7 +332,7 @@ images: [
   <tr><td>Gender</td><td>Unisex</td></tr>
 </table>
 `,
-    images: ["/images/new.jpeg"],
+    images: ["/new.jpeg"],
     soldOut: false,
     sale: false,
     category: "adult",
