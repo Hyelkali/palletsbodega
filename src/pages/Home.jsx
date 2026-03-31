@@ -84,7 +84,7 @@ const Home = () => {
     originalPrice: 250.0,
     description:
       "Explore deeper intimacy and control with this premium BDSM bondage kit. Includes high-quality restraints, sensory tools, and body-safe silicone accessories for a safe, versatile experience.",
-    images: ["/images/new.jpeg"],
+    images: ["https://res.cloudinary.com/devnath/image/upload/v1774947053/new_ttorra.jpg"],
     soldOut: false,
     sale: false,
     category: "adult",
@@ -229,7 +229,7 @@ const Home = () => {
           </div>
 
           <div className="hero-media">
-            <img src="/images/new.jpeg" alt="BDSM Bondage Kit" className="hero-image" />
+            <img src="https://res.cloudinary.com/devnath/image/upload/v1774947053/new_ttorra.jpg" alt="BDSM Bondage Kit" className="hero-image" />
           </div>
         </div>
 
