@@ -245,6 +245,7 @@ const Header = () => {
             className="mobile-menu-toggle"
             onClick={toggleMobileMenu}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <svg
@@ -263,7 +264,7 @@ const Header = () => {
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
             ) : (
-              <span className="hamburger"></span>
+              <span className={`hamburger ${isMobileMenuOpen ? "active" : ""}`}></span>
             )}
           </button>
         </div>
