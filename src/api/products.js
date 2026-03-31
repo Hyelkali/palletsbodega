@@ -301,6 +301,44 @@ images: [
     featured: true,
   },
   {
+    id: 19,
+    name: "Premium 10-Piece BDSM Bondage Kit – Leather Restraints, Collar, Gag & Silicone Toys Set",
+    price: 200.0,
+    originalPrice: 250.0,
+    description: `
+<h2>Premium 10-Piece BDSM Bondage Kit</h2>
+
+<p>Explore deeper intimacy and control with this premium BDSM bondage kit, designed for both beginners and experienced users. This all-in-one set includes high-quality restraints, sensory tools, and body-safe silicone accessories to enhance every experience.</p>
+
+<p>Crafted with durable materials and adjustable fittings, this kit offers comfort, control, and versatility for a wide range of play styles. Perfect for couples looking to explore bondage, restraint, and sensory stimulation in a safe and exciting way.</p>
+
+<h3>Key Features</h3>
+<ul>
+  <li>Premium Materials: Faux leather, stainless steel hardware, body-safe silicone</li>
+  <li>Adjustable Fit: Suitable for most body sizes</li>
+  <li>Multi-Function Kit: Combines restraint + stimulation tools</li>
+  <li>Beginner Friendly: Easy to use and safe for first-time users</li>
+  <li>Discreet & Portable: Easy to store and travel with</li>
+</ul>
+
+<h3>Specifications</h3>
+<table>
+  <tr><th>Feature</th><th>Details</th></tr>
+  <tr><td>Material</td><td>PU leather / silicone / metal</td></tr>
+  <tr><td>Color</td><td>Black</td></tr>
+  <tr><td>Pieces</td><td>10 items</td></tr>
+  <tr><td>Power</td><td>Rechargeable (for vibrators)</td></tr>
+  <tr><td>Waterproof</td><td>Some components</td></tr>
+  <tr><td>Gender</td><td>Unisex</td></tr>
+</table>
+`,
+    images: ["/images/new.jpeg"],
+    soldOut: false,
+    sale: false,
+    category: "adult",
+    featured: true,
+  },
+  {
     id: 1,
     name: "Auto Clicker for Phone",
     price: 82.99,

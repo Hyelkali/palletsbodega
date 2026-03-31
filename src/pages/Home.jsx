@@ -76,6 +76,21 @@ const Home = () => {
     featured: true,
   }
 
+  // New BDSM product
+  const bdsmBondageKit = {
+    id: 19,
+    name: "Premium 10-Piece BDSM Bondage Kit – Leather Restraints, Collar, Gag & Silicone Toys Set",
+    price: 200.0,
+    originalPrice: 250.0,
+    description:
+      "Explore deeper intimacy and control with this premium BDSM bondage kit. Includes high-quality restraints, sensory tools, and body-safe silicone accessories for a safe, versatile experience.",
+    images: ["/images/new.jpeg"],
+    soldOut: false,
+    sale: false,
+    category: "adult",
+    featured: true,
+  }
+
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
@@ -187,7 +202,36 @@ const Home = () => {
           </div>
         </div>
 
+        {/* BDSM Bondage Kit HERO */}
+        <div className="hero-product">
+          <div className="hero-content">
+            <div className="hero-badge">NEW</div>
+            <h1 className="hero-title">{bdsmBondageKit.name}</h1>
+            <p className="hero-description">{bdsmBondageKit.description}</p>
 
+            <div className="hero-price">$200.00 USD</div>
+
+            <div className="hero-actions">
+              <button
+                className="hero-button primary"
+                onClick={() => navigate('/product/19')}
+              >
+                View Details
+              </button>
+
+              <button
+                className="hero-button secondary"
+                onClick={() => handleBuyNow(bdsmBondageKit)}
+              >
+                Buy Now
+              </button>
+            </div>
+          </div>
+
+          <div className="hero-media">
+            <img src="/images/new.jpeg" alt="BDSM Bondage Kit" className="hero-image" />
+          </div>
+        </div>
 
         {/* FEATURED PRODUCTS GRID */}
         <div className="products-section">
